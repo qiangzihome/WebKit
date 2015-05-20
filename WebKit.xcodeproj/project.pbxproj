@@ -14,6 +14,10 @@
 		D55471691B0ACD0C007E471E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D55471681B0ACD0C007E471E /* Images.xcassets */; };
 		D554716C1B0ACD0C007E471E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D554716A1B0ACD0C007E471E /* LaunchScreen.xib */; };
 		D55471781B0ACD0C007E471E /* WebKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D55471771B0ACD0C007E471E /* WebKitTests.m */; };
+		D55471821B0B0F2F007E471E /* jquery-1.11.2.min.js in Resources */ = {isa = PBXBuildFile; fileRef = D55471811B0B0F2F007E471E /* jquery-1.11.2.min.js */; };
+		D55471841B0B0F39007E471E /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = D55471831B0B0F39007E471E /* index.html */; };
+		D55471861B0B0F45007E471E /* jquery.fullPage.css in Resources */ = {isa = PBXBuildFile; fileRef = D55471851B0B0F45007E471E /* jquery.fullPage.css */; };
+		D55471881B0B0F4B007E471E /* jquery.fullPage.min.js in Resources */ = {isa = PBXBuildFile; fileRef = D55471871B0B0F4B007E471E /* jquery.fullPage.min.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +44,10 @@
 		D55471711B0ACD0C007E471E /* WebKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D55471761B0ACD0C007E471E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D55471771B0ACD0C007E471E /* WebKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebKitTests.m; sourceTree = "<group>"; };
+		D55471811B0B0F2F007E471E /* jquery-1.11.2.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.11.2.min.js"; sourceTree = "<group>"; };
+		D55471831B0B0F39007E471E /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		D55471851B0B0F45007E471E /* jquery.fullPage.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = jquery.fullPage.css; sourceTree = "<group>"; };
+		D55471871B0B0F4B007E471E /* jquery.fullPage.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.fullPage.min.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +96,10 @@
 				D55471651B0ACD0C007E471E /* Main.storyboard */,
 				D55471681B0ACD0C007E471E /* Images.xcassets */,
 				D554716A1B0ACD0C007E471E /* LaunchScreen.xib */,
+				D55471831B0B0F39007E471E /* index.html */,
+				D55471851B0B0F45007E471E /* jquery.fullPage.css */,
+				D55471811B0B0F2F007E471E /* jquery-1.11.2.min.js */,
+				D55471871B0B0F4B007E471E /* jquery.fullPage.min.js */,
 				D554715B1B0ACD0C007E471E /* Supporting Files */,
 			);
 			path = WebKit;
@@ -199,9 +211,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D55471841B0B0F39007E471E /* index.html in Resources */,
 				D55471671B0ACD0C007E471E /* Main.storyboard in Resources */,
+				D55471861B0B0F45007E471E /* jquery.fullPage.css in Resources */,
+				D55471881B0B0F4B007E471E /* jquery.fullPage.min.js in Resources */,
 				D554716C1B0ACD0C007E471E /* LaunchScreen.xib in Resources */,
 				D55471691B0ACD0C007E471E /* Images.xcassets in Resources */,
+				D55471821B0B0F2F007E471E /* jquery-1.11.2.min.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +434,7 @@
 				D554717D1B0ACD0C007E471E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D554717E1B0ACD0C007E471E /* Build configuration list for PBXNativeTarget "WebKitTests" */ = {
 			isa = XCConfigurationList;
@@ -426,6 +443,7 @@
 				D55471801B0ACD0C007E471E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
