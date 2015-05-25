@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		115A4B2F1B121BBC00B86046 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 115A4B2E1B121BBC00B86046 /* www */; };
 		D554715E1B0ACD0C007E471E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D554715D1B0ACD0C007E471E /* main.m */; };
 		D55471611B0ACD0C007E471E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D55471601B0ACD0C007E471E /* AppDelegate.m */; };
 		D55471641B0ACD0C007E471E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D55471631B0ACD0C007E471E /* ViewController.m */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		115A4B2E1B121BBC00B86046 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
 		D55471581B0ACD0C007E471E /* WebKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D554715C1B0ACD0C007E471E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D554715D1B0ACD0C007E471E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 		D554715A1B0ACD0C007E471E /* WebKit */ = {
 			isa = PBXGroup;
 			children = (
+				115A4B2E1B121BBC00B86046 /* www */,
 				D554715F1B0ACD0C007E471E /* AppDelegate.h */,
 				D55471601B0ACD0C007E471E /* AppDelegate.m */,
 				D55471621B0ACD0C007E471E /* ViewController.h */,
@@ -211,6 +214,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				115A4B2F1B121BBC00B86046 /* www in Resources */,
 				D55471841B0B0F39007E471E /* index.html in Resources */,
 				D55471671B0ACD0C007E471E /* Main.storyboard in Resources */,
 				D55471861B0B0F45007E471E /* jquery.fullPage.css in Resources */,

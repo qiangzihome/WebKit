@@ -27,12 +27,89 @@
 //    NSString *HTML = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"] encoding:NSUTF8StringEncoding error:nil];
 //    [self.webView loadHTMLString:HTML baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
 
-    NSURL *URL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"]];
-    [self.webView loadRequest:[NSURLRequest requestWithURL:URL]];
-    [self.view addSubview:self.webView];
+//    NSURL *URL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"]];
+//    NSURL *toURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@index.html", NSTemporaryDirectory()]];
+
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+////    BOOL isTrue = [fileManager copyItemAtURL:URL toURL:toURL error:nil]; // 拷贝文件
+//    
+//    NSURL *URL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"www" ofType:@""]];
+//    NSURL *toURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@www/", NSTemporaryDirectory()]];
+//    
+//    if(![fileManager fileExistsAtPath:[NSString stringWithFormat:@"%@www/index.html", NSTemporaryDirectory()]]) {
+//        [fileManager moveItemAtURL:URL toURL:toURL error:nil]; // 拷贝目录
+//    }
     
+    [self copyFrom:[[NSBundle mainBundle] pathForResource:@"www" ofType:@""] to:[NSString stringWithFormat:@"%@www/", NSTemporaryDirectory()] error:nil];
+    
+
+    NSURL *HTMLURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@www/index.html", NSTemporaryDirectory()]];
+    
+    [self.webView loadRequest:[NSURLRequest requestWithURL:HTMLURL]];
+    [self.view addSubview:self.webView];
+    [self.view sendSubviewToBack:self.webView];
+
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
+    
+}
+
+
+- (BOOL)copyFrom:(NSString*)src to:(NSString*)dest error:(NSError* __autoreleasing*)error
+{
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    
+    if (![fileManager fileExistsAtPath:src]) {
+        NSString* errorString = [NSString stringWithFormat:@"%@ file does not exist.", src];
+        if (error != NULL) {
+            (*error) = [NSError errorWithDomain:@"TestDomainTODO"
+                                           code:1
+                                       userInfo:[NSDictionary dictionaryWithObject:errorString
+                                                                            forKey:NSLocalizedDescriptionKey]];
+        }
+        return NO;
+    }
+    
+    // generate unique filepath in temp directory
+    CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
+    CFStringRef uuidString = CFUUIDCreateString(kCFAllocatorDefault, uuidRef);
+    NSString* tempBackup = [[NSTemporaryDirectory() stringByAppendingPathComponent:(__bridge NSString*)uuidString] stringByAppendingPathExtension:@"bak"];
+    CFRelease(uuidString);
+    CFRelease(uuidRef);
+    
+    BOOL destExists = [fileManager fileExistsAtPath:dest];
+    
+    // backup the dest
+    if (destExists && ![fileManager copyItemAtPath:dest toPath:tempBackup error:error]) {
+        return NO;
+    }
+    
+    // remove the dest
+    if (destExists && ![fileManager removeItemAtPath:dest error:error]) {
+        return NO;
+    }
+    
+    // create path to dest
+    if (!destExists && ![fileManager createDirectoryAtPath:[dest stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:error]) {
+        return NO;
+    }
+    
+    // copy src to dest
+    if ([fileManager copyItemAtPath:src toPath:dest error:error]) {
+        // success - cleanup - delete the backup to the dest
+        if ([fileManager fileExistsAtPath:tempBackup]) {
+            [fileManager removeItemAtPath:tempBackup error:error];
+        }
+        return YES;
+    } else {
+        // failure - we restore the temp backup file to dest
+        [fileManager copyItemAtPath:tempBackup toPath:dest error:error];
+        // cleanup - delete the backup to the dest
+        if ([fileManager fileExistsAtPath:tempBackup]) {
+            [fileManager removeItemAtPath:tempBackup error:error];
+        }
+        return NO;
+    }
 }
 
 #pragma make - WKScriptMessageHandler methods
@@ -81,6 +158,12 @@
     self.title = self.webView.title;
     NSLog(@"didFinishNavigation");
 }
+
+//- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction
+//decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+//{
+//    NSLog(@"decidePolicyForNavigationAction");
+//}
 
 - (void)addUserScriptsToUserContentController:(WKUserContentController *)userContentController {
     WKUserScript *hideTableOfContentsScript = [[WKUserScript alloc] initWithSource:@"$.fn.fullpage.moveTo(3)" injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
