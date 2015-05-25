@@ -11,7 +11,8 @@
 
 @interface ViewController () <WKUIDelegate, WKScriptMessageHandler, WKNavigationDelegate>
 
-@property (nonatomic, strong)WKWebView *webView;
+@property (nonatomic, strong) WKWebView *webView;
+@property (weak, nonatomic) IBOutlet UIProgressView *pregress;
 
 @end
 
@@ -19,10 +20,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
     [self addUserScriptsToUserContentController:configuration.userContentController];
-    self.webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:configuration];
+    
+    self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
+    [self.view insertSubview:self.webView belowSubview:self.pregress];
+    
+    // Constraints
+    [self.webView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:self.webView
+                                                                       attribute:NSLayoutAttributeWidth
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:self.view
+                                                                       attribute:NSLayoutAttributeWidth
+                                                                      multiplier:1
+                                                                        constant:0];
+    [self.view addConstraint:widthConstraint];
+    NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:self.webView
+                                                                        attribute:NSLayoutAttributeHeight
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.view
+                                                                        attribute:NSLayoutAttributeHeight
+                                                                       multiplier:1
+                                                                         constant:-44];
+    [self.view addConstraint:heightConstraint];
     
 //    NSString *HTML = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"] encoding:NSUTF8StringEncoding error:nil];
 //    [self.webView loadHTMLString:HTML baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
@@ -40,18 +62,30 @@
 //        [fileManager moveItemAtURL:URL toURL:toURL error:nil]; // 拷贝目录
 //    }
     
-    [self copyFrom:[[NSBundle mainBundle] pathForResource:@"www" ofType:@""] to:[NSString stringWithFormat:@"%@www/", NSTemporaryDirectory()] error:nil];
+//    [self copyFrom:[[NSBundle mainBundle] pathForResource:@"www" ofType:@""] to:[NSString stringWithFormat:@"%@www/", NSTemporaryDirectory()] error:nil];
+//    NSURL *HTMLURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@www/index.html", NSTemporaryDirectory()]];
+//    [self.webView loadRequest:[NSURLRequest requestWithURL:HTMLURL]];
     
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]]];
+//    [self.view addSubview:self.webView];
 
-    NSURL *HTMLURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@www/index.html", NSTemporaryDirectory()]];
-    
-    [self.webView loadRequest:[NSURLRequest requestWithURL:HTMLURL]];
-    [self.view addSubview:self.webView];
-    [self.view sendSubviewToBack:self.webView];
-
-    self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
+    self.webView.UIDelegate = self;
     
+    [self.webView addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:nil];
+    [self.webView addObserver:self forKeyPath:@"loading" options:NSKeyValueObservingOptionNew context:nil];
+    [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"estimatedProgress"]) {
+        self.pregress.hidden = self.webView.estimatedProgress == 1;
+        self.pregress.progress = self.webView.estimatedProgress;
+    } else if ([keyPath isEqualToString:@"title"]) {
+        self.title = self.webView.title;
+    } else if ([keyPath isEqualToString:@"loading"]) {
+        NSLog(@"%d", self.webView.loading);
+    }
 }
 
 
@@ -116,20 +150,29 @@
 #pragma make 接收JS
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
 {
-    
+    if ([message.name isEqual:@"didChangeTitleOfViewController"])
+    {
+//        self.title = message.body;
+    }
 }
 
 #pragma make - WKUIDelegate methods
 #pragma make web界面中有弹出确认框时调用
 - (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler
 {
-    NSLog(@"%@", message);
+    
 }
 
 #pragma make web界面中有弹出警告框时调用
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)())completionHandler
 {
-    NSLog(@"%@", message);
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示:" message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        completionHandler();
+    }]];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma make web界面中有弹出输入框时调用
@@ -155,7 +198,9 @@
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
     // [self dismissViewControllerAnimated:YES completion:^{}];
-    self.title = self.webView.title;
+//    self.title = self.webView.title;
+    [self.pregress setProgress:0.0f animated:NO];
+    
     NSLog(@"didFinishNavigation");
 }
 
@@ -166,8 +211,10 @@
 //}
 
 - (void)addUserScriptsToUserContentController:(WKUserContentController *)userContentController {
-    WKUserScript *hideTableOfContentsScript = [[WKUserScript alloc] initWithSource:@"$.fn.fullpage.moveTo(3)" injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
-    [userContentController addUserScript:hideTableOfContentsScript];
+//    WKUserScript *hideTableOfContentsScript = [[WKUserScript alloc] initWithSource:@"$.fn.fullpage.moveTo(3)" injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
+//    [userContentController addUserScript:hideTableOfContentsScript];
+    
+    [userContentController addScriptMessageHandler:self name:@"didChangeTitleOfViewController"];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -15,10 +15,17 @@
 
 <script type="text/javascript">
 	$(function(){
-		$('#dowebok').fullpage({
+		$('#section').fullpage({
 			loopBottom: true,
-			navigation: true,
-			sectionsColor: ['#f2f2f2', '#4BBFC3', '#7BAABE', 'whitesmoke', '#ccddff']
+// 			navigation: true,
+			sectionsColor: ['#4BBFC3', '#7BAABE', '#ccddff'],
+			onLeave:function(index, nextIndex, direction) {
+// 				alert("bbbb");
+			},
+			afterLoad:function(anchorLink, index) {
+				$("title").text($($(".section").get(index - 1)).attr("title"));
+				// window.webkit.messageHandlers.didChangeTitleOfViewController.postMessage($($(".section").get(index - 1)).attr("title"));
+			}
 		});
 	});
 </script>
@@ -26,14 +33,14 @@
 </head>
 <body>
 	
-	<div id="dowebok">
-	    <div class="section" id="section0">
+	<div id="section">
+	    <div class="section" id="section0" title="第一屏">
 	        <h1>第一屏</h1>
 	    </div>
-	    <div class="section" id="section2">
+	    <div class="section" id="section2" title="第二屏">
 	        <h1>第二屏</h1>
 	    </div>
-	    <div class="section" id="section3">
+	    <div class="section" id="section3" title="第三屏">
 	        <h1>第三屏</h1>
 	    </div>
 	</div>

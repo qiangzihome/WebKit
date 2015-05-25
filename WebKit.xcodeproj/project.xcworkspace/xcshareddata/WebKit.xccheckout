@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>ED668181-2CF3-451C-9017-BB4BF758475F</string>
 	<key>IDESourceControlProjectName</key>
-	<string>WebKit</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>FF3C41FC5C17DAC4D39EE7D2BFC6AC5D0B59FE9C</key>
 		<string>https://github.com/qiangzihome/WebKit.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>WebKit.xcodeproj</string>
+	<string>WebKit.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>FF3C41FC5C17DAC4D39EE7D2BFC6AC5D0B59FE9C</key>

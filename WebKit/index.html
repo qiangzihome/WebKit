@@ -15,10 +15,21 @@
 
 <script type="text/javascript">
 	$(function(){
-		$('#dowebok').fullpage({
+		$('#section').fullpage({
 			loopBottom: true,
-			navigation: true,
-			sectionsColor: ['#f2f2f2', '#4BBFC3', '#7BAABE', 'whitesmoke', '#ccddff']
+// 			navigation: true,
+			sectionsColor: ['#4BBFC3', '#7BAABE', '#ccddff'],
+			onLeave:function(index, nextIndex, direction) {
+				alert("bbbb");
+			},
+			afterLoad:function(anchorLink, index) {
+				alert("aaaa");
+			}
+		});
+		
+		$("#section0").click(function(){
+			// alert("aaaaaaaaa");
+			$(this).children("h1").text("test");
 		});
 	});
 </script>
@@ -26,7 +37,7 @@
 </head>
 <body>
 	
-	<div id="dowebok">
+	<div id="section">
 	    <div class="section" id="section0">
 	        <h1>第一屏</h1>
 	    </div>

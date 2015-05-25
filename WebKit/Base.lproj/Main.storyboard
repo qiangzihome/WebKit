@@ -15,18 +15,60 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pxa-zJ-ia7">
+                                <rect key="frame" x="0.0" y="64" width="600" height="2"/>
+                            </progressView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t7y-Ju-qLv">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="7y8-Av-LHa"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem title="&lt;" id="fFx-Z9-xk1">
+                                        <color key="tintColor" red="0.039215687659999998" green="0.40784317260000003" blue="0.21568629149999999" alpha="1" colorSpace="deviceRGB"/>
+                                    </barButtonItem>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="WCV-oz-Qi5"/>
+                                    <barButtonItem title="&gt;" id="62I-hD-Wdx">
+                                        <color key="tintColor" red="0.039215687659999998" green="0.40784317260000003" blue="0.21568629149999999" alpha="1" colorSpace="deviceRGB"/>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="U53-7x-vfY"/>
+                                    <barButtonItem title="x" id="CtV-ZT-9zD">
+                                        <color key="tintColor" red="0.039215687659999998" green="0.40784317260000003" blue="0.21568629149999999" alpha="1" colorSpace="deviceRGB"/>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="t7y-Ju-qLv" secondAttribute="bottom" id="3bE-fz-K7W"/>
+                            <constraint firstItem="t7y-Ju-qLv" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="Kbt-DF-KQq"/>
+                            <constraint firstItem="pxa-zJ-ia7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="N9T-ff-56v"/>
+                            <constraint firstItem="t7y-Ju-qLv" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="YyJ-d0-rYm"/>
+                            <constraint firstItem="pxa-zJ-ia7" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="ZhN-46-lua"/>
+                            <constraint firstItem="pxa-zJ-ia7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="eIE-Dz-ysZ"/>
+                            <constraint firstAttribute="trailing" secondItem="pxa-zJ-ia7" secondAttribute="trailing" id="oWn-HJ-Hmi"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="N9T-ff-56v"/>
+                            </mask>
+                        </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="Vs4-ty-9f9"/>
+                    <navigationItem key="navigationItem" id="Vs4-ty-9f9">
+                        <nil key="title"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="pregress" destination="pxa-zJ-ia7" id="1YC-2W-mtj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="182" y="44"/>
+            <point key="canvasLocation" x="118" y="39"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="OdN-zJ-56w">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="09q-pw-Yao" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="lLg-uR-qIJ" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Bve-VY-Hhk">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -36,6 +78,7 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="qGs-bB-Pze"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="09q-pw-Yao" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-559" y="44"/>
         </scene>
