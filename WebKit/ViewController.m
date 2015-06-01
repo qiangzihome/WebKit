@@ -66,7 +66,7 @@
 //    NSURL *HTMLURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@www/index.html", NSTemporaryDirectory()]];
 //    [self.webView loadRequest:[NSURLRequest requestWithURL:HTMLURL]];
     
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]]];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.sina.com"]]];
 //    [self.view addSubview:self.webView];
 
     self.webView.navigationDelegate = self;
@@ -157,6 +157,16 @@
 }
 
 #pragma make - WKUIDelegate methods
+
+#pragma make target=_blank新开窗口
+- (WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures
+{
+    if (!navigationAction.targetFrame.isMainFrame) {
+        [webView loadRequest:navigationAction.request];
+    }
+    return nil;
+}
+
 #pragma make web界面中有弹出确认框时调用
 - (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler
 {
